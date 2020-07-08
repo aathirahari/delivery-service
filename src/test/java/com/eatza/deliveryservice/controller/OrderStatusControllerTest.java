@@ -81,7 +81,7 @@ public class OrderStatusControllerTest {
 				.thenThrow(new DeliveryPersonException("Delivery Person currently unavailable,Please wait"));
 		RequestBuilder request = MockMvcRequestBuilders.post("/delivery").contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString((orderRequestDto)));
-		mockMvc.perform(request).andExpect(status().is(200))
+		mockMvc.perform(request).andExpect(status().is(404))
 				.andExpect(content().string("Delivery Person currently unavailable,Please wait")).andReturn();
 	}
 
@@ -90,7 +90,7 @@ public class OrderStatusControllerTest {
 		OrderRequestDto orderRequestDto = new OrderRequestDto();
 		orderStatus.setStatus("Delivered");
 		Mockito.when(deliveryService.closeOrder(Mockito.anyInt())).thenReturn(orderStatus);
-		RequestBuilder request = MockMvcRequestBuilders.post("/delivery/closeOrder/1")
+		RequestBuilder request = MockMvcRequestBuilders.put("/delivery/closeOrder/1")
 				.contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString((orderRequestDto)))
 				.header(HttpHeaders.AUTHORIZATION, jwt);
 		mockMvc.perform(request).andExpect(status().is(200)).andExpect(content().string("Delivered")).andReturn();
@@ -99,7 +99,7 @@ public class OrderStatusControllerTest {
 	public void testCloseOrder_Exception() throws Exception {
 		OrderRequestDto orderRequestDto = new OrderRequestDto();
 		Mockito.when(deliveryService.closeOrder(Mockito.anyInt())).thenThrow(InvalidOrderIdException.class);
-		RequestBuilder request = MockMvcRequestBuilders.post("/delivery/closeOrder/1")
+		RequestBuilder request = MockMvcRequestBuilders.put("/delivery/closeOrder/1")
 				.contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString((orderRequestDto)))
 				.header(HttpHeaders.AUTHORIZATION, jwt);
 		mockMvc.perform(request).andExpect(status().is(404)).andReturn();
@@ -112,7 +112,7 @@ public class OrderStatusControllerTest {
 		
 		OrderRequestDto orderRequestDto = new OrderRequestDto();
 		Mockito.when(deliveryService.closeOrder(Mockito.anyInt())).thenReturn(orderStatus);
-		RequestBuilder request = MockMvcRequestBuilders.post("/delivery/closeOrder/1")
+		RequestBuilder request = MockMvcRequestBuilders.put("/delivery/closeOrder/1")
 				.contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString((orderRequestDto)))
 				.header(HttpHeaders.AUTHORIZATION, jwt);
 		mockMvc.perform(request).andExpect(status().is(401)).andReturn();

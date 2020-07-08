@@ -11,7 +11,7 @@
 	<groupId>com.eatza</groupId>
 	<artifactId>deliveryservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>deliveryservice</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>

@@ -27,7 +27,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 	public ResponseEntity<Object> exception(DeliveryPersonException exception) {
 		logger.debug("Handling DeliveryPersonException");
 		logger.debug(exception.getMessage());
-		 return new ResponseEntity<>(exception.getMessage(), HttpStatus.OK);
+		 return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
 	}
 	@ExceptionHandler(InvalidOrderIdException.class)
 	public ResponseEntity<Object> exception(InvalidOrderIdException exception) {

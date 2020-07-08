@@ -23,7 +23,17 @@ public class DeliveryPersonRepositoryTest {
 	@Test
 	public void findAll() {
 		List<DeliveryPerson> deliveryPerson=deliveryPersonRepository.findAll();
+		assertEquals(3, deliveryPerson.size());
+	}
+	
+	@Test
+	public void testFindByAvailability(){
+		List<DeliveryPerson> deliveryPerson=deliveryPersonRepository.findByAvailability(true);
 		assertEquals(2, deliveryPerson.size());
+		deliveryPerson=deliveryPersonRepository.findByAvailability(false);
+		assertEquals(1, deliveryPerson.size());
+		
+		
 	}
 	
 

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,7 +44,7 @@ public class OrderStatusController {
 				.status(HttpStatus.OK)
 				.body(orderStatus.getStatus());
 	}
-	@PostMapping("/delivery/closeOrder/{id}")
+	@PutMapping("/delivery/closeOrder/{id}")
 	public ResponseEntity<String> closeOrder(@RequestHeader String authorization, @PathVariable int id) throws DeliveryPersonException, InvalidOrderIdException{
 		logger.debug("In closeOrder method,calling delivery order service");
 		OrderStatus orderStatus= deliveryService.closeOrder(id);
